@@ -29,8 +29,7 @@ Kismet:
 
 
 /etc/kismet/kismet.conf 
-ttyAMA0
-gps=gpsd:host=localhost,port=20175
+gps=tcp:host=0.0.0.0,port=20175
 
 
 start:
