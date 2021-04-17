@@ -1,0 +1,47 @@
+USB WIfi Treiber:
+https://github.com/aircrack-ng/rtl8812au
+https://forum.mxlinux.org/viewtopic.php?t=49102
+
+******************************
+
+
+install ShareGPS
+	neue Verbindung Port 50000
+ADB aktivieren
+	sudo apt install adb
+	
+GPS:
+	sudo apt install gpsd
+	adb forward tcp:20175 tcp:50000
+	nc localhost 20175
+		Wenn keine Pakete --> ShareGPS --> Settings --> Create NMEA
+		
+(start GPS: gpsd tcp://localhost:20175)
+http://jillybunch.com/sharegps/nmea-usb-linux.html
+https://null-byte.wonderhowto.com/how-to/wardrive-with-kali-raspberry-pi-map-wi-fi-devices-0176558/
+
+Kismet:
+	Wenn nicht erkannt
+	sudo apt remove kismet
+	sudo apt install build-essential git libwebsockets-dev pkg-config zlib1g-dev libnl-3-dev libnl-genl-3-dev libcap-dev libpcap-dev libnm-dev libdw-dev libsqlite3-dev libprotobuf-dev libprotobuf-c-dev protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0-0-dev python3 python3-setuptools python3-protobuf python3-requests python3-numpy python3-serial python3-usb python3-dev python3-websockets librtlsdr0 libubertooth-dev libbtbb-dev
+	https://www.kismetwireless.net/docs/readme/quickstart/
+
+
+
+/etc/kismet/kismet.conf 
+ttyAMA0
+gps=gpsd:host=localhost,port=20175
+
+
+start:
+kismet -c wlan1
+
+**********************
+Auswertung:
+
+kismetdb_to_wiglecsv --in <input file>.kismet --out <output file>.csv
+or
+kismetdb_to_kml --in <input file>.kismet --out <output file>.kml
+upload to: https://www.google.com/maps/d/
+
+kismetdb_to_kml --in Kismet-20210415-19-13-22-1.kismet --out test-scan-evening.kml
